@@ -1,0 +1,8 @@
+# Netlify detecta o Next.js sozinho; este arquivo só fixa o básico.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_TELEMETRY_DISABLED = "1"

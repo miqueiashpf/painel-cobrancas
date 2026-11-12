@@ -2,7 +2,7 @@
 
 Painel interno para as mensalidades, os jogadores e o sorteio da pelada de segunda (23h).
 
-**Stack:** Next.js 16 (App Router) · Supabase (Postgres + Auth) · Vercel · Tailwind CSS 4 · Zod.
+**Stack:** Next.js 16 (App Router) · Supabase (Postgres + Auth) · Netlify · Tailwind CSS 4 · Zod.
 
 ## Como a segurança funciona
 
@@ -73,16 +73,18 @@ O primeiro admin não tem quem o convide, então ele é criado à mão:
    ```
 3. Abra o link do e-mail. A partir daí, os outros convites saem pela tela **Equipe**.
 
-### 3. Vercel
+### 3. Netlify
 
-1. Importe o repositório na Vercel.
-2. Em **Settings > Environment Variables**, cadastre as variáveis do arquivo `.env.example`:
+1. Em https://app.netlify.com, clique em **Add new project > Import an existing project > GitHub** e escolha `painel-cobrancas`.
+2. A Netlify detecta o Next.js sozinha. O `netlify.toml` já define o comando `npm run build` e o Node 22, então não precisa mudar nada.
+3. Antes de publicar, abra **Project configuration > Environment variables** e cadastre as 4 variáveis do `.env.example`:
    - `SUPABASE_URL` e `SUPABASE_ANON_KEY`;
-   - `SUPABASE_SERVICE_ROLE_KEY`, que é **secreta**;
-   - `SITE_URL`.
+   - `SUPABASE_SERVICE_ROLE_KEY`, que é **secreta**. Marque **Contains secret values**;
+   - `SITE_URL`, com o endereço do site na Netlify, por exemplo `https://painel-pelada.netlify.app`.
 
-   Nenhuma delas usa o prefixo `NEXT_PUBLIC_`, de propósito.
-3. Configure o domínio. O HSTS exige HTTPS, e a Vercel já cuida disso.
+   Deixe todas valendo para todos os escopos (Builds, Functions e Runtime). Nenhuma usa o prefixo `NEXT_PUBLIC_`, de propósito.
+4. Clique em **Deploy**. Quando terminar, copie o endereço do site e confira se ele é o mesmo que está em `SITE_URL` e nas URLs do Supabase (passo 1.5). Se for diferente, corrija e publique de novo.
+5. Se for usar domínio próprio, adicione-o em **Domain management**. A Netlify ativa o HTTPS sozinha. Depois atualize `SITE_URL` e as URLs do Supabase.
 
 ## Desenvolvimento
 
